@@ -6,7 +6,9 @@
             <p>{{ product.price }}</p>
             <p>{{ product.article }}</p>
         </div>
+        <span class="v-cart-item__btn" @click="moreOne()">+</span>
         <div>Qty: {{ product.quantity }}</div>
+        <span class="v-cart-item__btn" @click="lessOne()">-</span>
         <button @click="deleteFromCartItem()">Remove product</button>
     </div>
 </template>
@@ -14,7 +16,15 @@
 <script>
     export default {
         name: "v-cart-item",
-        props: ['product', 'deleteFromCart'],
+        props: ['product', 'deleteFromCart', 'addProductItem', 'removeProductItem'],
+        computed: {
+            moreOne() {
+                this.$emit('addProductItem')
+            },
+            lessOne() {
+                this.$emit('removeProductItem')
+            },
+        },
         methods: {
             deleteFromCartItem() {
                 this.$emit('deleteFromCart')
@@ -37,6 +47,11 @@
         box-shadow: 0 0 8px 0 #e0e0e0;
         padding: $padding * 2;
         margin: $margin * 2;
+        &__btn {
+            padding: 20px;
+            display: inline-block;
+            border: 1px solid black;
+        }
         &-info {
             display: flex;
             flex-direction: column;

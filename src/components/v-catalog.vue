@@ -1,5 +1,8 @@
 <template>
     <div class="v-catalog">
+        <router-link :to="{name: 'cart', params: {cart: cart}}">
+            <div class="v-catalog__link">Cart: {{ cart.length }}</div>
+        </router-link>
         <vCatalogItem
             v-for="(product, index) in allProducts"
             :key="product.article"
@@ -11,7 +14,7 @@
 
 <script>
     import vCatalogItem from './v-catalog-item';
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
     export default {
         name: "v-catalog",
         components: {
@@ -23,6 +26,7 @@
             }
         },
         computed: {
+            ...mapGetters(['cart']),
               allProducts() {
                 return this.$store.getters.products
               }
@@ -40,10 +44,18 @@
 </script>
 
 <style scoped lang="scss">
+    @import "../assets/sass/variables";
     .v-catalog {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
+        &__link {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: $padding * 2;
+            border: 1px solid #2c3e50;
+        }
     }
 </style>

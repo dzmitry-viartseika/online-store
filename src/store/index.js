@@ -36,8 +36,13 @@ export default new Vuex.Store({
         state.cart.push(product)
       }
     },
+    addProductItem(state, index) {
+      state.cart[index].quantity++
+    },
     deleteProduct(state, index) {
-      state.cart.splice(index,1)
+      if(state.cart.quantity > 1) {
+        state.cart[index].quantity--
+      }
     }
   },
   actions: {
@@ -55,6 +60,12 @@ export default new Vuex.Store({
     },
     addToCartProduct({commit}, product) {
       commit('setCart', product)
+    },
+    addProduct({commit}, index) {
+      commit('addProductItem', index)
+    },
+    removeProduct({commit}, index) {
+      commit('removeProductItem', index)
     },
     deleteProductFromCart({commit}, index) {
       commit('deleteProduct', index)
