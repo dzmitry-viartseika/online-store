@@ -46,7 +46,7 @@
             }
         },
         methods: {
-            ...mapActions(['deleteProductFromCart','product', 'deleteFromCart']),
+            ...mapActions(['deleteProductFromCart','product', 'deleteFromCart', 'addProduct', 'removeProduct']),
             deleteFromCart(index) {
                 this.deleteProductFromCart(index)
             },

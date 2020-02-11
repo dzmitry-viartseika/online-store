@@ -39,8 +39,8 @@ export default new Vuex.Store({
     addProductItem(state, index) {
       state.cart[index].quantity++
     },
-    deleteProduct(state, index) {
-      if(state.cart.quantity > 1) {
+    removeProductItem(state, index) {
+      if(state.cart[index].quantity > 1) {
         state.cart[index].quantity--
       }
     }
