@@ -14,6 +14,8 @@
 </template>
 
 <script>
+
+
     export default {
         name: "v-cart-item",
         props: ['product', 'deleteFromCart'],
@@ -29,7 +31,6 @@
             lessOne() {
                 this.$emit('removeProductItem')
             },
-
         },
         mounted() {
             this.$set(this.product, 'quantity', 1);
