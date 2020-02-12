@@ -39,6 +39,7 @@
         },
         beforeDestroy() {
             document.removeEventListener('click', this.hideSelect)
+
         }
     }
 </script>
