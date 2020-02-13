@@ -43,6 +43,9 @@ export default new Vuex.Store({
       if(state.cart[index].quantity > 1) {
         state.cart[index].quantity--
       }
+    },
+    deleteProduct(state, index) {
+      state.cart.splice(index,1)
     }
   },
   actions: {

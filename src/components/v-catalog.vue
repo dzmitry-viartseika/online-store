@@ -1,5 +1,23 @@
 <template>
     <div>
+        <div class="v-catalog-range">
+            <input type="range"
+                   min="0"
+                   max="10000"
+                   step="10"
+                   v-model.number="minPrice"
+                   @change="setRangeSliders()"
+            >
+            <input type="range"
+                   min="0"
+                   max="10000"
+                   step="10"
+                   v-model.number="maxPrice"
+                   @change="setRangeSliders()"
+            >
+            <p>Min:{{minPrice}}</p>
+            <p>Max:{{maxPrice}}</p>
+        </div>
         <vSelect :options="category"
                  @select="sortByCategory"
                  :selected="selected"
@@ -45,7 +63,9 @@
                     },
                 ],
                 selected: 'Select Category',
-                sortedProducts: []
+                sortedProducts: [],
+                minPrice: 0,
+                maxPrice: 10000
             }
         },
         computed: {
@@ -75,12 +95,34 @@
                     }
                 })
             },
+            sortByCategories(category) {
+                this.sortedProducts = [...this.allProducts]
+                console.log('sortedProducts', this.sortedProducts);
+                this.sortedProducts = this.sortedProducts.filter((item) => {
+                    return item.price >= this.minPrice && item.price <= this.maxPrice
+                })
+                if (category) {
+                    this.sortedProducts = this.sortedProducts.filter((item) => {
+                        this.selected === category.name
+                        return item.category === category.name
+                    })
+                }
+            },
+            setRangeSliders() {
+                if (this.minPrice > this.maxPrice) {
+                    let tmp = this.maxPrice
+                    this.maxPrice = this.minPrice;
+                    this.minPrice = tmp;
+                }
+                this.sortByCategories()
+            },
             select(option) {
                 this.selected = option.name
             }
         },
         mounted() {
             this.fetchProducts();
+            this.sortByCategories()
         }
     }
 </script>
@@ -98,6 +140,25 @@
             right: 10px;
             padding: $padding * 2;
             border: 1px solid #2c3e50;
+        }
+        &-range {
+            width: 200px;
+            text-align: center;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & svg, & input[type="range"] {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+            }
+            & input[type="range"]::-webkit-slider-thumb {
+                z-index: 2;
+                position: relative;
+                top: 2px;
+                margin-top: -7px;
+            }
         }
     }
 </style>
