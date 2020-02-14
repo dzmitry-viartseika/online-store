@@ -69,7 +69,7 @@
             }
         },
         computed: {
-            ...mapGetters(['cart']),
+            ...mapGetters(['cart', 'searchData']),
               allProducts() {
                 return this.$store.getters.products
               },
@@ -79,6 +79,11 @@
                 } else {
                     return  this.allProducts
                 }
+            }
+        },
+        watch: {
+            searchData() {
+                this.sortProductsBySearchData(this.searchData)
             }
         },
         methods: {
@@ -94,6 +99,15 @@
                         this.sortedProducts.push(item)
                     }
                 })
+            },
+            sortProductsBySearchData(value) {
+                if(value) {
+                    this.sortedProducts = this.sortedProducts.filter(item => {
+                        return item.name.toLowerCase().includes(value.toLowerCase())
+                    })
+                } else {
+                    this.sortedProducts = this.allProducts;
+                }
             },
             sortByCategories(category) {
                 this.sortedProducts = [...this.allProducts]
@@ -121,7 +135,13 @@
             }
         },
         mounted() {
-            this.fetchProducts();
+            this.fetchProducts()
+                .then((response) => {
+                    if (response.data) {
+                        this.sortedProducts()
+                        this.sortProductsBySearchData(this.searchData)
+                    }
+            })
             this.sortByCategories()
         }
     }
@@ -136,12 +156,13 @@
         align-items: center;
         &__link {
             position: absolute;
-            top: 10px;
+            top: 90px;
             right: 10px;
             padding: $padding * 2;
             border: 1px solid #2c3e50;
         }
         &-range {
+            margin-top: 50px;
             width: 200px;
             text-align: center;
             position: relative;

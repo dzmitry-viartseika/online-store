@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     products: [],
-    cart: []
+    cart: [],
+    searchData: ''
   },
   getters: {
     products(state) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     cart(state) {
       return state.cart;
+    },
+    searchData(state) {
+      return state.searchData
     }
   },
   mutations: {
@@ -46,6 +50,9 @@ export default new Vuex.Store({
     },
     deleteProduct(state, index) {
       state.cart.splice(index,1)
+    },
+    writeValue(state, value) {
+      state.searchData = value
     }
   },
   actions: {
@@ -72,6 +79,9 @@ export default new Vuex.Store({
     },
     deleteProductFromCart({commit}, index) {
       commit('deleteProduct', index)
+    },
+    writeSearchValue({commit}, value) {
+      commit('writeValue', value)
     }
   },
 })

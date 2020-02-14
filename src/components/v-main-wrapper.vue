@@ -1,6 +1,6 @@
 <template>
     <div class="v-main-wrapper">
-        <h1>Catalog</h1>
+        <vHeader/>
         <keep-alive>
             <router-view></router-view>
         </keep-alive>
@@ -8,8 +8,12 @@
 </template>
 
 <script>
+    import vHeader from '../components/layouts/v-header'
     export default {
         name: "v-main-wrapper",
+        components: {
+            vHeader
+        }
     }
 </script>
 

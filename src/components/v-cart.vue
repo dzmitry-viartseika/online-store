@@ -64,6 +64,7 @@
     @import "../assets/sass/variables";
     .v-cart {
         margin-bottom: 50px;
+        margin-top: 100px;
         &-total {
             position: fixed;
             bottom: 0;
