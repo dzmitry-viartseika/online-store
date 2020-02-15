@@ -48,8 +48,6 @@
         mounted() {
             let vm = this;
             document.addEventListener('click', function (item) {
-                console.log('wertey');
-                console.log(item);
                 if(item.target === vm.$refs.modal) {
                     vm.closePopup()
                 }

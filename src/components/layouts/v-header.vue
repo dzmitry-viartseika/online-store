@@ -8,12 +8,13 @@
                 v-model="searchData"
             >
             <button><i class="material-icons" @click="search(searchData)">search</i></button>
+            <button><i class="material-icons" @click="clearField(searchData)">close</i></button>
         </div>
     </div>
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions} from 'vuex'
     export default {
         name: "v-header",
         data() {
@@ -21,15 +22,20 @@
                 searchData: ''
             }
         },
-        computed: {
-            ...mapGetters(['searchData']),
-        },
         methods: {
             ...mapActions(['writeSearchValue']),
             search(value) {
-                console.log(value);
                 this.writeSearchValue(value)
-                this.$router.push('/catalog')
+                if (this.$router !== '/catalog') {
+                    this.$router.push('/catalog')
+                }
+            },
+            clearField() {
+                this.searchData = ''
+                this.writeSearchValue()
+                if (this.$router !== '/catalog') {
+                    this.$router.push('/catalog')
+                }
             }
         }
     }

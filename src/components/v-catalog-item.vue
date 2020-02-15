@@ -1,5 +1,7 @@
 <template>
-    <div class="v-catalog-item">
+    <div class="v-catalog-item"
+    @click="showProductPage()"
+    >
         <vModal v-if="isPopupVisible"
                 @closePopup="closeInfoPopup"
                 :isPopupVisible.sync="isPopupVisible"
@@ -42,7 +44,7 @@
 
     export default {
         name: "v-catalog-item",
-        props: ['product', 'sendArticle'],
+        props: ['product', 'sendArticle', 'productClick'],
         data() {
             return {
                 isPopupVisible: false,
@@ -52,6 +54,9 @@
             vModal
         },
         methods: {
+            showProductPage() {
+                this.$emit('productClick', this.product.article)
+            },
             addToCart() {
                 this.$emit('addToCart', this.product)
             },

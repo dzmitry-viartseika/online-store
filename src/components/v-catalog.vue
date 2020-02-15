@@ -31,6 +31,7 @@
                     :key="product.article"
                     :product="product"
                     @addToCart="addToCart"
+                    @productClick="productClick"
             />
         </div>
     </div>
@@ -91,6 +92,9 @@
             addToCart(data) {
                 this.addToCartProduct(data)
             },
+            productClick(article) {
+                this.$router.push({name: 'product', query: {'product': article}})
+            },
             sortByCategory(category) {
                 this.sortedProducts = []
                 this.selected = category.name
@@ -101,8 +105,9 @@
                 })
             },
             sortProductsBySearchData(value) {
+                this.sortedProducts = this.allProducts
                 if(value) {
-                    this.sortedProducts = this.sortedProducts.filter(item => {
+                    this.sortedProducts = this.sortedProducts.filter((item) => {
                         return item.name.toLowerCase().includes(value.toLowerCase())
                     })
                 } else {
@@ -110,8 +115,7 @@
                 }
             },
             sortByCategories(category) {
-                this.sortedProducts = [...this.allProducts]
-                console.log('sortedProducts', this.sortedProducts);
+                this.sortedProducts = this.allProducts
                 this.sortedProducts = this.sortedProducts.filter((item) => {
                     return item.price >= this.minPrice && item.price <= this.maxPrice
                 })
@@ -137,7 +141,7 @@
         mounted() {
             this.fetchProducts()
                 .then((response) => {
-                    if (response.data) {
+                    if (response) {
                         this.sortedProducts()
                         this.sortProductsBySearchData(this.searchData)
                     }
