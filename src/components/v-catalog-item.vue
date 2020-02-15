@@ -1,6 +1,6 @@
 <template>
+    <!--    @click="showProductPage()"-->
     <div class="v-catalog-item"
-    @click="showProductPage()"
     >
         <vModal v-if="isPopupVisible"
                 @closePopup="closeInfoPopup"

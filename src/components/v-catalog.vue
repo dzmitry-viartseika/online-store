@@ -1,5 +1,9 @@
 <template>
     <div>
+        <vNotification
+            :messages="messages"
+            :timeOut="5000"
+        />
         <div class="v-catalog-range">
             <input type="range"
                    min="0"
@@ -39,6 +43,7 @@
 
 <script>
     import vCatalogItem from './v-catalog-item';
+    import vNotification from './notifications/v-notification';
     import vSelect from './elements/v-select'
     import { mapActions, mapGetters } from 'vuex';
     export default {
@@ -46,6 +51,7 @@
         components: {
             vCatalogItem,
             vSelect,
+            vNotification,
         },
         data() {
             return {
@@ -66,7 +72,8 @@
                 selected: 'Select Category',
                 sortedProducts: [],
                 minPrice: 0,
-                maxPrice: 10000
+                maxPrice: 10000,
+                messages: []
             }
         },
         computed: {
@@ -91,6 +98,14 @@
             ...mapActions(['fetchProducts', 'addToCartProduct']),
             addToCart(data) {
                 this.addToCartProduct(data)
+                    .then(() => {
+                        let timeStamp = Date.now().toLocaleString()
+                        this.messages.unshift({
+                            name: 'Good is added',
+                            icon: 'check_circle',
+                            id: timeStamp
+                        })
+                    })
             },
             productClick(article) {
                 this.$router.push({name: 'product', query: {'product': article}})
